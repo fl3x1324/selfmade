@@ -6,7 +6,7 @@
   --color-blue: #3b49df;
   --color-red: #df3b3b;
   --color-green: #3bdf72;
-  --color-gray: #b5bdc4;
+  --color-gray: #d7dee4;
 }
 html,
 body {
@@ -165,8 +165,9 @@ button.btn-google {
 
 button.btn-logo {
   background-color: var(--color-text);
+  letter-spacing: -2px;
   color: white;
-  text-transform: uppercase;
+  text-transform: lowercase;
   font-size: 1.5rem;
   padding: 0.5rem 1rem;
 }
@@ -235,6 +236,10 @@ input[type="file"] {
 
 .push-left {
   margin-left: auto;
+}
+
+.push-right {
+  margin-right: auto;
 }
 
 .text-sm {
