@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import ReactMarkdown from "react-markdown";
 import AuthCheck from "../../components/AuthCheck";
+import ImageUploader from "../../components/ImageUploader";
 import { auth, firestore } from "../../lib/firebase";
 import styles from "../../styles/Admin.module.css";
 
@@ -47,7 +48,7 @@ function PostManager() {
 }
 
 function PostForm({ defaultValues, postRef, preview }) {
-  const { register, handleSubmit, reset, watch } = useForm({ defaultValues, mode: "onChange" });
+  const { register, handleSubmit, reset, watch, formState: { isDirty, isValid, errors } } = useForm({ defaultValues, mode: "onChange" });
   const updatePost = async ({ content, published }) => {
     await updateDoc(postRef, { content, published, updatedAt: serverTimestamp() });
     reset({ content, published });
@@ -61,13 +62,31 @@ function PostForm({ defaultValues, postRef, preview }) {
         </div>
       )}
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea name="content" {...register("content", { required: true })}></textarea>
+        <ImageUploader />
+        <textarea
+          name="content"
+          {...register("content",
+            {
+              required: {
+                value: true,
+                message: "content is required",
+              },
+              minLength: {
+                value: 10,
+                message: "content is too short",
+              },
+              maxLength: {
+                value: 32768,
+                message: "content is too long",
+              }
+            })
+          }></textarea>
+        {errors.content && <p className="text-danger">{errors.content.message}</p>}
         <fieldset>
           <input className={styles.checkbox} type="checkbox" {...register("published")} />
           <label>Published</label>
         </fieldset>
-        <button type="submit" className="btn-green">Save Changes</button>
+        <button type="submit" className="btn-green" disabled={!isDirty || !isValid}>Save Changes</button>
       </div>
-    </form>
-  )
+    </form>)
 }
