@@ -23,7 +23,7 @@ export default function Home(props) {
     const last = posts[posts.length - 1];
     const cursor = typeof last.createdAt === "number" ? fromMillis(last.createdAt) : last.createdAt;
 
-    const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("createdAt", "desc"), startAfter(cursor), limit(LIMIT));
+    const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("updatedAt", "desc"), startAfter(cursor), limit(LIMIT));
     const newPosts = (await getDocs(postsQuery)).docs.map(doc => doc.data());
     setPosts(posts.concat(newPosts));
     setLoading(false);
