@@ -4,7 +4,7 @@ import Loader from "../components/Loader";
 import PostFeed from "../components/PostFeed";
 import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 
-const LIMIT = 1;
+const LIMIT = 15;
 
 export async function getServerSideProps(_) {
   const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("createdAt", "desc"), limit(LIMIT));
