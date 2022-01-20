@@ -7,7 +7,7 @@ import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 const LIMIT = 15;
 
 export async function getServerSideProps(_) {
-  const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("updatedAt", "desc"), limit(LIMIT));
+  const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("createdAt", "desc"), limit(LIMIT));
   const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
   return {
     props: { posts },
@@ -23,7 +23,7 @@ export default function Home(props) {
     const last = posts[posts.length - 1];
     const cursor = typeof last.createdAt === "number" ? fromMillis(last.createdAt) : last.createdAt;
 
-    const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("updatedAt", "desc"), startAfter(cursor), limit(LIMIT));
+    const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("createdAt", "desc"), startAfter(cursor), limit(LIMIT));
     const newPosts = (await getDocs(postsQuery)).docs.map(doc => doc.data());
     setPosts(posts.concat(newPosts));
     setLoading(false);
