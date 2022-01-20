@@ -7,7 +7,7 @@ import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 const LIMIT = 15;
 
 export async function getServerSideProps(_) {
-  const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("createdAt", "desc"), limit(LIMIT));
+  const postsQuery = query(collectionGroup(firestore, "posts"), where("published", "==", true), orderBy("updatedAt", "desc"), limit(LIMIT));
   const posts = (await getDocs(postsQuery)).docs.map(postToJSON);
   return {
     props: { posts },
