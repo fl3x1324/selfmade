@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 :root {
   --color-bg: #eef0f1;
@@ -12,7 +14,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Roboto", "Noto Sans", sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
   margin-top: 50px;
